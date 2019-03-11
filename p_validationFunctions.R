@@ -42,7 +42,9 @@ validGenBankId <- function(id){
 # Check for a valid Ensembl function
 
 
-ensemblIdSpecies <- function(id, ensIdList = ensIds, bool = FALSE){
+ensemblIdSpecies <- function(id, bool = FALSE){
+	ensIdList <- readRDS('2018-09-21_ensIds.RDS')
+	
 	# Pull out the mouse matches
 	if(substr(id, 1, 3) == "MGP"){
 		prefix <- unlist(stringr::str_extract_all(id, "[Mm][Gg][Pp][_][A-Za-z0-9]+[_]"))
