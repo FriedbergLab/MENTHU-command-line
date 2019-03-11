@@ -1,3 +1,5 @@
+#!/usr/bin/Rscript
+
 ###############################
 
 #### Usage ####
@@ -55,6 +57,18 @@ source("p_required2.0Functions_1.R")
 source("p_targetAccessoryFunctions2.0.R")
 source("p_ensemblAccessoryFunctions.R")
 source("p_validationFunctions.R")
+
+suppressMessages(library(stringr))
+suppressMessages(library(stringi))
+suppressMessages(library(Biostrings))
+suppressMessages(library(rentrez))
+suppressMessages(library(rlist))
+suppressMessages(library(plyr))
+suppressMessages(library(Rcpp))
+suppressMessages(library(curl))
+suppressMessages(library(httr))
+suppressMessages(library(jsonlite))
+suppressMessages(library(xml2))
 
 #### Check all the inputs before proceeding ####
 validate <- toupper(as.character(validate))
