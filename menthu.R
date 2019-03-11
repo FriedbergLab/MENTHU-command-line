@@ -193,8 +193,8 @@ if(as.logical(validate)) {
 	suppressWarnings(threshold <- as.numeric(threshold))
 	if(is.na(threshold)) {
 		errMess <- c(errMess, "Error: Threshold must be a number")
-	} else if(threshold < 1) {
-		errMess <- c(errMess, "Error: Threshold must be >= 1")
+	} else if(threshold < 0) {
+		errMess <- c(errMess, "Error: Threshold must be >= 0")
 	}
 	
 	# Validate T7 flag
@@ -265,10 +265,10 @@ if(!allValid){
 		info <- suppressWarnings(getGenbankFile(gl))
 		
 		if(crisprFlag) {
-			result <- calculateMENTHUGeneSeqGenBank(pam, distDSB, oh, wiggle = TRUE, wiggleRoom = 39, NULL, info, 1, silent)
+			results <- calculateMENTHUGeneSeqGenBank(pam, distDSB, oh, wiggle = TRUE, wiggleRoom = 39, NULL, info, 1, silent)[[1]]
 			
 		} else if(talFlag) {
-			result <- calculateMENTHUGeneSeqGenBank(NULL, NULL, NULL, wiggle = TRUE, wiggleRoom = 39, tals, info, 1, silent)
+			results <- calculateMENTHUGeneSeqGenBank(NULL, NULL, NULL, wiggle = TRUE, wiggleRoom = 39, tals, info, 1, silent)[[1]]
 			
 			
 		} else {
@@ -281,6 +281,8 @@ if(!allValid){
 			results <- results[which(unlist(lapply(1:nrow(results), 
 																						 function(x) grepl("((^[G]{1,2})|(^[ACGT][G]))", results$Target_Sequence[x], perl=TRUE, ignore.case=TRUE)))), ]
 		}
+		
+		results <- results[order(-results$MENTHU_Score), ]
 		write.table(results, outFile, append = FALSE, quote = FALSE, sep = ",", na = "NOT APPLICABLE", row.names = FALSE, col.names = TRUE)
 		
 		
@@ -305,14 +307,15 @@ if(!allValid){
 		}
 
 		if(crisprFlag) {
-			results <- calculateMENTHUEnsembl(pam, distDSB, oh, wiggle = TRUE, wiggleRoom = 39, NULL, ensemblInfo, ensemblStuff, silent)
+			results <- calculateMENTHUEnsembl(pam, distDSB, oh, wiggle = TRUE, wiggleRoom = 39, NULL, ensemblInfo, exonStuff, silent)[[1]]
 			
 		} else if(talFlag) {
-			results <- calculateMENTHUEnsembl(NULL, NULL, NULL, wiggle = TRUE, wiggleRoom = 39, tals, ensemblInfo, ensemblStuff, silent)
+			results <- calculateMENTHUEnsembl(NULL, NULL, NULL, wiggle = TRUE, wiggleRoom = 39, tals, ensemblInfo, exonStuff, silent)[[1]]
 			
 		} else {
 			
 		}
+		
 		
 		results <- results[which(results$MENTHU_Score >= threshold),]
 		if(t7Flag && crisprFlag){
@@ -320,6 +323,7 @@ if(!allValid){
 			results <- results[which(unlist(lapply(1:nrow(results), 
 																							 function(x) grepl("((^[G]{1,2})|(^[ACGT][G]))", results$Target_Sequence[x], perl=TRUE, ignore.case=TRUE)))), ]
 		}
+		results <- results[order(-results$MENTHU_Score), ]
 		write.table(results, outFile, append = FALSE, quote = FALSE, sep = ",", na = "NOT APPLICABLE", row.names = FALSE, col.names = TRUE)
 		
 	} else if(glType == 'file') {
@@ -352,6 +356,7 @@ if(!allValid){
 				results <- results[which(unlist(lapply(1:nrow(results), 
 																							 function(x) grepl("((^[G]{1,2})|(^[ACGT][G]))", results$Target_Sequence[x], perl=TRUE, ignore.case=TRUE)))), ]
 			}
+			results <- results[order(-results$MENTHU_Score), ]
 			write.table(results[1, i], fileNames[i], append = FALSE, quote = FALSE, sep = ",", na = "NOT APPLICABLE", row.names = FALSE, col.names = TRUE)
 		}
 		
@@ -360,10 +365,10 @@ if(!allValid){
 		
 		
 		if(crisprFlag) {
-			results <- calculateMENTHUGeneSeq(pam, distDSB, oh, wiggle = TRUE, wiggleRoom = 39, NULL, gl, silent)
+			results <- calculateMENTHUGeneSeq(pam, distDSB, oh, wiggle = TRUE, wiggleRoom = 39, NULL, gl, silent)[[1]]
 			
 		} else if(talFlag) {
-			results <- calculateMENTHUGeneSeq(NULL, NULL, NULL, wiggle = TRUE, wiggleRoom = 39, tals, stripWhiteSpace(toupper(gl)), silent)
+			results <- calculateMENTHUGeneSeq(NULL, NULL, NULL, wiggle = TRUE, wiggleRoom = 39, tals, stripWhiteSpace(toupper(gl)), silent)[[1]]
 			
 		} else {
 			
@@ -374,6 +379,7 @@ if(!allValid){
 			results <- results[which(unlist(lapply(1:nrow(results), 
 																						 function(x) grepl("((^[G]{1,2})|(^[ACGT][G]))", results$Target_Sequence[x], perl=TRUE, ignore.case=TRUE)))), ]
 		}
+		results <- results[order(-results$MENTHU_Score), ]
 		write.table(results, outFile, append = FALSE, quote = FALSE, sep = ",", na = "NOT APPLICABLE", row.names = FALSE, col.names = TRUE)
 	} else {
 		
