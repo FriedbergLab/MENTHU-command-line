@@ -361,7 +361,7 @@ getTalPatterns <- function(tL, tR, spa){
 	patListNeg <- NULL
 	patList    <- NULL
 	
-	patListPos <- paste0("(?=T[ACGT]{", tL + tR + spa - 2, "}A))")
+	patListPos <- paste0("(?=T[ACGT]{", tL + tR + spa - 2, "}A)")
 	patListNeg <- paste0("(?=(A[ACGT]{", tL + tR + spa - 2, "}T)")
 	patList    <- paste0(tL, "/", spa, "/", tR)
 
