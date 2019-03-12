@@ -3,7 +3,7 @@
 ###############################
 
 #### Usage ####
-# Rscript menthu.R ["CRISPR Option"] ["PAM Sequence"] [Distance to DSB] [Overhang] ["TALEN Option"] ["TALEN scheme"] ["Gen Input Type"] ["Gen Input"] [Score Threshold] ["T7 opt"] [silent] [validate]
+# Rscript menthu.R [CRISPR Option] ["PAM Sequence] [Distance to DSB] [Overhang] [TALEN Option] [TALEN scheme] [Gen Input Type] [Gen Input] [Score Threshold] [T7 opt] [verbose] [validate]
 # Example SpCas9, Ensembl:
 # Rscript menthu.R 'T' 'NGG' -3 0 'F' NA 'ens' 'ENSDART00000011520.8' 1.5 'F' 'F' 'F'
 # Example Cas12a:
@@ -14,22 +14,22 @@
 # Parameter Explanation
 # Parameter:				Accepted Values:						Explanation:
 # outFile						character string						The name of the file to output your results to. If using a fasta file with multiple sequences, multiple files will be created, using this as a prefix
-# "CRISPR Option"		"T" or "F"									Flags the system to use CRISPR nuclease processing. If this option is "T" (true), "TALEN Option" must be "F" (false)  
-# "PAM Sequence"		A PAM sequence							The PAM sequence for the CRISPR sequence. Ambiguous nucleotides are allowed. Using "N" will scan every possible 
+# CRISPR Option			T or F											Flags the system to use CRISPR nuclease processing. If this option is T (true), TALEN Option must be F (false)  
+# PAM Sequence			A PAM sequence							The PAM sequence for the CRISPR sequence. Ambiguous nucleotides are allowed. Using N will scan every possible 
 #																										cut site in the target sequence
-# "Distance to DSB"	Integer											The distance from the PAM sequence to the DSB site. For DSBs upstream of a PAM, use a negative value (e.g., "-3" for SpCa9); 
-#																										for downstream, use a positive value (e.g., "18" for Cas12a.)
-# "Overhang"				Integer >= 0								The length of 5' overhang produced by the nuclease (e.g., "5" for Cas12a). Use "0" for blunt-cutting nucleases. 
-# "TALEN Option"		"T" or "F"									Flags the system to use TALEN processing. If this option is "T" (true), "CRISPR Option" must be "F" (false)
-# "TALEN Scheme"		"15-18/14 or 16/15-18"			The left arm length, spacer length, and right arm length to use when searching for TALEN locations. E.g., for a TALEN
-#																										with arms 15 nt long, with spacer 14 nt, use "15/14/15". TALEN arms can be 15-18 nt in length; the spacer should be 14 OR 16 nt
+# Distance to DSB	Integer												The distance from the PAM sequence to the DSB site. For DSBs upstream of a PAM, use a negative value (e.g., -3 for SpCa9); 
+#																										for downstream, use a positive value (e.g., 18 for Cas12a.)
+# Overhang					Integer >= 0								The length of 5' overhang produced by the nuclease (e.g., 5 for Cas12a). Use 0 for blunt-cutting nucleases. 
+# TALEN Option			T or F											Flags the system to use TALEN processing. If this option is T (true), CRISPR Option must be F (false)
+# TALEN Scheme			15-18/14 or 16/15-18				The left arm length, spacer length, and right arm length to use when searching for TALEN locations. E.g., for a TALEN
+#																										with arms 15 nt long, with spacer 14 nt, use 15/14/15. TALEN arms can be 15-18 nt in length; the spacer should be 14 OR 16 nt
 #																										in length (15 is not allowed for the spacer)
-# "Gen Input Type"	"gb" "ens" "seq" "file"			Flags the system to get a GenBank/RefSeq ID ("gb"), Ensembl ID "ens", DNA sequence ("seq"), or to expect a FASTA file ("file")	
-# "Gen Input"				See explanation							Provide the accession for GenBank/RefSeq/Ensembl inputs, file name for "file" option, or DNA sequence for "seq"
-# "Score Threshold"	Positive number							Only output results with MENTHU score above this threshold. Default is 1.0. Recommended only use sites with score >= 1.5
-# "T7 opt"					"T" or "F"									If "T" (true), only displays results where the gRNA is compatible with T7-cloning. Default is "F" - displays all sites.
-# "silent"					"T" or "F"									If "T" (true), does not output progress messages to the console. Default is "F" - output progress messages
-# "validate"				"T" or "F"									If "T" (true), checks the command line arguments to make sure they are all valid (this may take some time); if "F", skip validation checks
+# Gen Input Type		gb ens seq file							Flags the system to get a GenBank/RefSeq ID (gb), Ensembl ID ens, DNA sequence (seq), or to expect a FASTA file (file)	
+# Gen Input					See explanation							Provide the accession for GenBank/RefSeq/Ensembl inputs, file name for file option, or DNA sequence for seq
+# Score Threshold		Positive number							Only output results with MENTHU score above this threshold. Default is 1.0. Recommended only use sites with score >= 1.5
+# T7 opt						T or F											If T (true), only displays results where the gRNA is compatible with T7-cloning. Default is F - displays all sites.
+# verbose						T or F											If T (true), does not output progress messages to the console. Default is F - output progress messages
+# validate					T or F											If T (true), checks the command line arguments to make sure they are all valid (this may take some time); if F, skip validation checks
 
 
 args <- commandArgs(TRUE)
@@ -46,7 +46,7 @@ glType     <- args[8]
 gl         <- args[9]
 threshold  <- args[10]
 t7Flag     <- args[11]
-silent     <- args[12]
+verbose    <- args[12]
 validate   <- args[13]
 
 # Source required supporting files
@@ -79,7 +79,7 @@ warnMess <- c()
 if(as.logical(validate)) {
 	allValid <- FALSE
 	
-	if(!silent) { print("Validating arguments...") } # Progress update
+	if(verbose) { print("Validating arguments...") } # Progress update
 	
 	# Check the CRISPR and TALEN information
 	if(crisprFlag && talFlag) {
@@ -217,10 +217,10 @@ if(as.logical(validate)) {
 		errMess <- c(errMess, "Error: T7 filter must be 'TRUE' or 'FALSE'")
 	} 
 	
-	# Validate silent flag
-	silent <- toupper(silent)
-	if(!(as.logical(silent) || suppressWarnings(as.logical(as.numeric(silent))))) {
-		errMess <- c(errMess, "Error: 'Silent' parameter must be 'TRUE' or 'FALSE'")
+	# Validate verbose flag
+	verbose <- toupper(verbose)
+	if(!(as.logical(verbose) || suppressWarnings(as.logical(as.numeric(verbose))))) {
+		errMess <- c(errMess, "Error: 'verbose' parameter must be 'TRUE' or 'FALSE'")
 	} 
 	
 	if (length(errMess) == 0) {
@@ -255,7 +255,7 @@ if(as.logical(validate)) {
 	gl         <- as.character(gl)
 	threshold  <- as.numeric(threshold)
 	t7Flag     <- as.logical(t7Flag)
-	silent     <- as.logical(silent)
+	verbose     <- as.logical(verbose)
 	
 	# If the validate parameter is itself invalid, destroy the universe	
 } else {
@@ -265,7 +265,7 @@ if(as.logical(validate)) {
 
 
 if(!allValid){
-	if(!silent) { 
+	if(verbose) { 
 		print(errMess) 
 	} else {
 		print(paste0("Error: ", paste(args, collapse = " ")))
@@ -279,10 +279,10 @@ if(!allValid){
 		info <- suppressWarnings(getGenbankFile(gl))
 		
 		if(crisprFlag) {
-			results <- calculateMENTHUGeneSeqGenBank(pam, distDSB, oh, wiggle = TRUE, wiggleRoom = 39, NULL, info, 1, silent)[[1]]
+			results <- calculateMENTHUGeneSeqGenBank(pam, distDSB, oh, wiggle = TRUE, wiggleRoom = 39, NULL, info, 1, verbose)[[1]]
 			
 		} else if(talFlag) {
-			results <- calculateMENTHUGeneSeqGenBank(NULL, NULL, NULL, wiggle = TRUE, wiggleRoom = 39, tals, info, 1, silent)[[1]]
+			results <- calculateMENTHUGeneSeqGenBank(NULL, NULL, NULL, wiggle = TRUE, wiggleRoom = 39, tals, info, 1, verbose)[[1]]
 			
 			
 		} else {
@@ -321,10 +321,10 @@ if(!allValid){
 		}
 
 		if(crisprFlag) {
-			results <- calculateMENTHUEnsembl(pam, distDSB, oh, wiggle = TRUE, wiggleRoom = 39, NULL, ensemblInfo, exonStuff, silent)[[1]]
+			results <- calculateMENTHUEnsembl(pam, distDSB, oh, wiggle = TRUE, wiggleRoom = 39, NULL, ensemblInfo, exonStuff, verbose)[[1]]
 			
 		} else if(talFlag) {
-			results <- calculateMENTHUEnsembl(NULL, NULL, NULL, wiggle = TRUE, wiggleRoom = 39, tals, ensemblInfo, exonStuff, silent)[[1]]
+			results <- calculateMENTHUEnsembl(NULL, NULL, NULL, wiggle = TRUE, wiggleRoom = 39, tals, ensemblInfo, exonStuff, verbose)[[1]]
 			
 		} else {
 			
@@ -347,10 +347,10 @@ if(!allValid){
 		
 		
 		if(crisprFlag) {
-			results <- lapply(inputSeqs, function(x) {calculateMENTHUGeneSeq(pam, distDSB, oh, wiggle = TRUE, wiggleRoom = 39, NULL, x, silent)})
+			results <- lapply(inputSeqs, function(x) {calculateMENTHUGeneSeq(pam, distDSB, oh, wiggle = TRUE, wiggleRoom = 39, NULL, x, verbose)})
 			
 		} else if(talFlag) {
-			results <- lapply(inputSeqs, function(x) {calculateMENTHUGeneSeq(NULL, NULL, NULL, wiggle = TRUE, wiggleRoom = 39, tals, x, silent)})
+			results <- lapply(inputSeqs, function(x) {calculateMENTHUGeneSeq(NULL, NULL, NULL, wiggle = TRUE, wiggleRoom = 39, tals, x, verbose)})
 			
 		} else {
 			
@@ -379,10 +379,10 @@ if(!allValid){
 		
 		
 		if(crisprFlag) {
-			results <- calculateMENTHUGeneSeq(pam, distDSB, oh, wiggle = TRUE, wiggleRoom = 39, NULL, gl, silent)[[1]]
+			results <- calculateMENTHUGeneSeq(pam, distDSB, oh, wiggle = TRUE, wiggleRoom = 39, NULL, gl, verbose)[[1]]
 			
 		} else if(talFlag) {
-			results <- calculateMENTHUGeneSeq(NULL, NULL, NULL, wiggle = TRUE, wiggleRoom = 39, tals, stripWhiteSpace(toupper(gl)), silent)[[1]]
+			results <- calculateMENTHUGeneSeq(NULL, NULL, NULL, wiggle = TRUE, wiggleRoom = 39, tals, stripWhiteSpace(toupper(gl)), verbose)[[1]]
 			
 		} else {
 			
