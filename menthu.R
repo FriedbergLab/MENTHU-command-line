@@ -276,6 +276,10 @@ if(!allValid){
 
 	
 	if(glType == 'gb') {
+		if(verbose) {
+			print("Retrieving GenBank accession...")
+		}
+		
 		info <- suppressWarnings(getGenbankFile(gl))
 		
 		if(crisprFlag) {
@@ -301,6 +305,11 @@ if(!allValid){
 		
 		
 	} else if(glType == 'ens') { 
+		
+		if(verbose) {
+			print("Retrieving Ensembl accession...")
+		}
+		
 		ensemblInfo <- handleEnsemblInput(gl, wiggle = TRUE, wiggleRoom = 39)
 		
 		# If the entry is NOT an exon
