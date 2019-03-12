@@ -1,17 +1,22 @@
-# MENTHU-command-line
+# MENTHU-command-line v1.0.0-alpha
 
-This repository contains scripts for running the MENTHU analysis at large scale, offline.
+This repository contains scripts for running the MENTHU analysis at large scale, offline. It is compatible with Linux, Mac, Windows (using Cygwin), and Windows CMD.
 
-You can run MENTHU online through a web interface here: http://genesculpt.org/menthu/
+This tool is intended for users who want to identify MENTHU scores for large sections of DNA (e.g., chromosomes, rather than genes).
 
-You can run MENTHU through a GUI locally using the instructions here: https://github.com/Dobbs-Lab/MENTHU#run-menthu-locally
+If you only intend to determine MENTHU scores on a small scale, we highly recommend that you:
 
-## Installation
+Run MENTHU online through a web interface here: http://genesculpt.org/menthu/
+
+Run MENTHU through a GUI locally using the instructions here: https://github.com/Dobbs-Lab/MENTHU#run-menthu-locally
+
+## MENTHU-command-line Installation
 MENTHU-command-line requires an R installation in order to work. 
 
-If you already have R installed, then you simply need to download and unzip the files in this repsository, change directory to the unzipped files, and
+If you already have R installed, then you can skip the R installation instructions and go straight to [Package Installation](https://github.com/Dobbs-Lab/MENTHU-command-line#package-installation); see Step 2 ([Add R to Path](https://github.com/Dobbs-Lab/MENTHU-command-line#.
 
-If you do not have R installed: 
+
+### [1. Download and Install R](#1-download-and-install-r)
 
 Download R for your appropriate operating system:
 
@@ -42,29 +47,90 @@ Mac OS:     https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Instal
 Linux/Unix: https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Installing-R-under-Unix_002dalikes
 
 
-### Adding R to PATH
+### [2. Add R to PATH](#add-r-to-path)
 MENTHU-command-line requires that the path to the R executable/binary be present in the environment PATH variable.
-Instructions for doing this are below.
-You should replace [text in brackets] with the specified information for your system.
+You can check if R is installed in your PATH with the following command (on Linux, Mac, Windows CMD, and Windows Cygwin):
+
+```
+R --version
+```
+If R is in your path, you will receive a message that looks a lot like below:
+
+```
+R version 3.4.4 <2018-03-15> -- "Someone to Lean On"
+Copyright <C> 2018 THe R Foundation for Statistical Computing
+```
+
+You can then go directly to [Package Installation](https://github.com/Dobbs-Lab/MENTHU-command-line#package-installation).
+
+If you receive ```-bash: R: command not found"``` on Unix/Cygwin or ```"'R' is not recognized as an internal or external command, operable program or batch file```, then R is not in your PATH, and you should follow the instructions below.
+
+Replace [text in brackets] with the specified information for your system.
 
 Linux:
 ```
 export PATH="[/path/to/R/]:$PATH"
 ```
+
 Mac:
 ```
 export PATH="[/path/to/R/]:$PATH"
 ```
+
 Windows, CMD:
 ```
 setx path "%path%;[\path\to\R\]"
 ```
+
 Windows, Cygwin:
 ```
 export PATH="[/path/to/R/]:$PATH"
 ```
 
-## Usage 
+### [3. Download MENTHU-command-line](#download-mcl)
+
+To download MENTHU-command-line, you can either:
+
+(1) Click the green "Clone or download" button in the upper right corner and choose "Download ZIP"
+
+OR
+
+(2) From a Linux, Mac, or Windows Cygwin command line, navigate to the location you want to keep the MENTHU-command-line script, and enter the following command:
+
+```
+git clone https://github.com/Dobbs-Lab/MENTHU-command-line.git
+```
+
+### [4. Package Installation](#package-installation)
+MENTHU-command-line requires a few additional R packages in order to function. You may need administrator or root privileges to install these packages.
+
+MENTHU-command-line includes a script, packageInstaller.R, to perform easy 1-step installation of the needed R packages.
+
+Use the following command the FIRST TIME you run MENTHU-command-line:
+
+```
+Rscript packageInstaller.R
+```
+
+This script will check if you have the appropriate packages installed, and then install them. This step may take several minutes, but does not need to be run subsequent times you run MENTHU-command-line (unless MENTHU-command-line is updated).
+
+### [5. Updating MENTHU-command-line](#updating)
+We will update the MENTHU-command-line code as needed (and there are a few additional convenience features under development.) Check the changelog for update information.
+
+To update from the command line, navigate into the directory containing your MENTHU-command-line scripts, and use the following command:
+
+```
+git pull origin master
+```
+
+Otherwise you will need to re-download the zip file as in [Download MENTU-command-line](#download-mcl).
+
+You should also re-run the packageInstaller.R script.
+
+
+## Running MENTHU-command-line
+
+
 Rscript menthu.R ["outFile"] ["CRISPR Option"] ["PAM Sequence"] [Distance to DSB] [Overhang] ["TALEN Option"] ["TALEN scheme"] ["Gen Input Type"] ["Gen Input"] [Score Threshold] ["T7 opt"] [silent] [validate]
 
 **Example SpCas9, Ensembl:**
