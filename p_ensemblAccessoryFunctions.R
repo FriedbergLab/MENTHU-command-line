@@ -173,8 +173,8 @@ getEnsemblIdType   <- function(id, check = FALSE){
 		# Check for Ensembl type ID
 		ensemblType <- ensemblIdSpecies(id, bool = TRUE)
 	}
-	
-	if(ensemblType){
+
+	if(ensemblType[[1]]){
 		# Get the species prefix
 		species <- ensemblIdSpecies(id)
 		
