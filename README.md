@@ -125,52 +125,66 @@ git pull origin master
 
 Otherwise you will need to re-download the zip file as in [Download MENTU-command-line](#download-mcl).
 
-You should also re-run the packageInstaller.R script.
+You should also re-run the packageInstaller.R script, in case new packages are now required.
 
 
 ## Running MENTHU-command-line
 
+MENTHU-command-line can be run from Unix-like command lines (Linux, Mac, Cygwin on Windows) or Windows CMD. However, due to end-of-line conversion differences between Unix and Dos, **you must use menthu.R on Linux, Mac, and Cygwin, and menthu-cmd.R in Windows CMD**. 
 
-Rscript menthu.R ["outFile"] ["CRISPR Option"] ["PAM Sequence"] [Distance to DSB] [Overhang] ["TALEN Option"] ["TALEN scheme"] ["Gen Input Type"] ["Gen Input"] [Score Threshold] ["T7 opt"] [silent] [validate]
+Check to make sure you're using the correct command for your system!
 
-**Example SpCas9, Ensembl:**
+MENTHU-command-line can be run using the following syntax:
+
 ```
-Rscript menthu.R 'EnsemblExample.csv' 'T' 'NGG' -3 0 'F' NA 'ens' 'ENSDART00000011520.8' 1.5 'F' 'F' 'F'
+Rscript menthu.R [outFile] [CRISPR Option] [PAM Sequence] [Distance to DSB] [Overhang] [TALEN Option] [TALEN scheme] [Gen Input Type] [Gen Input] [Score Threshold] [T7 opt] [verbose] [validate]
 ```
-**Example Cas12a:**
-```
-Rscript menthu.R 'EnsemblCas12aExample.csv' 'T' 'TTTN' 18 5 'F' NA 'ens' 'ENSDART00000011520.8' 1.5 'F' 'F' 'F'
-```
-**Example TALEN (left arm: 15 nts, spacer: 16 nts; right arm 18 nts):**
-```
-Rscript menthu.R 'GenBankTalenExample.csv' 'F' NA 0 0 'T' '15/16/18' 'gb' 'AY214391.1' 1.5 'F' 'F' 'F'
-```
+
+"Rscript" tells the system to use ```R``` to execute ```menthu.R``` (or ```menthu-cmd.R``` for Windows CMD).
+
 ### Parameter Explanation
+
+The parameters are explained below. Each parameter is delimited by a space. Parameter values should not have spaces; if you want to put spaces in the output file name, the name should be in quotes, e.g. "outputFile.csv". Parameter values (including strings) do not have to be in quotes, except for the output file name exception.
+
 ### Parameter:				Accepted Values:						Explanation:
 **"outFile"**					character string	file name	The name of the file to output your results to. If using a fasta file with multiple sequences, multiple files will be created, using this as a prefix
 
-**"CRISPR Option"**		"T" or "F"									Flags the system to use CRISPR nuclease processing. If this option is "T" (true), "TALEN Option" must be "F" (false)  
+**"CRISPR Option"**		T or F									Flags the system to use CRISPR nuclease processing. If this option is T (true), "TALEN Option" must be F (false)  
 
-**"PAM Sequence"**		A PAM sequence							The PAM sequence for the CRISPR sequence. Ambiguous nucleotides are allowed. Using "N" will scan every possible cut site in the target sequence
+**"PAM Sequence"**		A PAM sequence							The PAM sequence for the CRISPR sequence. Ambiguous nucleotides are allowed. Using N will scan every possible cut site in the target sequence. This parameter must be present, but is not used, if "CRISPR Option" is false (i.e., you can put a 0 or NA in this spot.)
 
-**"Distance to DSB"**	Integer											The distance from the PAM sequence to the DSB site. For DSBs upstream of a PAM, use a negative value (e.g., "-3" for SpCa9); for downstream, use a positive value (e.g., "18" for Cas12a.)
+**"Distance to DSB"**	Integer											The distance from the PAM sequence to the DSB site. For DSBs upstream of a PAM, use a negative value (e.g., -3 for SpCa9); for downstream, use a positive value (e.g., 18 for Cas12a.) This parameter must be present, but is not used, if "CRISPR Option" is false (i.e., you can put a 0 or NA in this spot.)
 
-**"Overhang"**				Integer >= 0								The length of 5' overhang produced by the nuclease (e.g., "5" for Cas12a). Use "0" for blunt-cutting nucleases. 
+**"Overhang"**				Integer >= 0								The length of 5' overhang produced by the nuclease (e.g., 5 for Cas12a). Use 0 for blunt-cutting nucleases. This parameter must be present, but is not used, if "CRISPR Option" is false (i.e., you can put a 0 or NA in this spot.)
 
-**"TALEN Option"**		"T" or "F"									Flags the system to use TALEN processing. If this option is "T" (true), "CRISPR Option" must be "F" (false)
+**"TALEN Option"**		T or F									Flags the system to use TALEN processing. If this option is T (true), "CRISPR Option" must be F (false)
 
-**"TALEN Scheme"**		"15-18/14 or 16/15-18"			The left arm length, spacer length, and right arm length to use when searching for TALEN locations. E.g., for a TALEN	with arms 15 nt long, with spacer 14 nt, use "15/14/15". TALEN arms can be 15-18 nt in length; the spacer should be 14 OR 16 nt	in length (15 is not allowed for the spacer)
+**"TALEN Scheme"**		15-18/14 or 16/15-18			The left arm length, spacer length, and right arm length to use when searching for TALEN locations. E.g., for a TALEN	with arms 15 nt long, with spacer 14 nt, use 15/14/15. TALEN arms can be 15-18 nt in length; the spacer should be 14 OR 16 nt	in length (15 is not allowed for the spacer) This parameter must be present, but is not used, if "TALEN Option" is false (i.e., you can put a 0 or NA in this spot.)
 
-**"Gen Input Type"**	"gb" "ens" "seq" "file"			Flags the system to get a GenBank/RefSeq ID ("gb"), Ensembl ID "ens", DNA sequence ("seq"), or to expect a FASTA file ("file")	
+**"Gen Input Type"**	gb ens seq file			Flags the system to get a GenBank/RefSeq ID (gb), Ensembl ID (ens), DNA sequence (seq), or to expect a FASTA file (file)	
 
-**"Gen Input"**				See explanation							Provide the accession for GenBank/RefSeq/Ensembl inputs, file name for "file" option, or DNA sequence for "seq"
+**"Gen Input"**				See explanation							Provide the accession for GenBank/RefSeq/Ensembl inputs, file name for "file" option, or DNA sequence for "seq". If the file name has spaces in it, put this parameter in quotes.
 
-**"Score Threshold"**	Positive number							Only output results with MENTHU score above this threshold. Default is 1.0. Recommended only use sites with score >= 1.5
+**"Score Threshold"**	Positive number							Only output results with MENTHU score above this threshold. Default is 1.0. We recommend to only use sites with score >= 1.5
 
-**"T7 opt"**					"T" or "F"									If "T" (true), only displays results where the gRNA is compatible with T7-cloning. 
+**"T7 opt"**					T or F									If T (true), only displays results where the gRNA is compatible with T7-cloning. 
 
-**"silent"**					"T" or "F"									If "T" (true), does not output progress messages to the console. 
+**"Verbose"**					T or F								If T (true), outputs progress messags to the console.
 
-**"validate"**				"T" or "F"									If "T" (true), checks the command line arguments to make sure they are all valid (this may take some time); if "F", skip validation checks
+**"validate"**				T or F								If T (true), checks the command line arguments to make sure they are all valid (this may take some time); if F, skip validation checks
 
 
+
+
+**Example SpCas9, Ensembl:**
+```
+Rscript menthu.R EnsemblExample.csv T NGG -3 0 F NA ens ENSDART00000011520.8 1.5 F F F
+```
+**Example Cas12a:**
+```
+Rscript menthu.R EnsemblCas12aExample.csv T TTTN 18 5 F NA ens ENSDART00000011520.8 1.5 F F F
+```
+**Example TALEN (left arm: 15 nts, spacer: 16 nts; right arm 18 nts):**
+```
+Rscript menthu.R GenBankTalenExample.csv F NA 0 0 T 15/16/18 gb AY214391.1 1.5 F F F
+```
