@@ -19,7 +19,7 @@
 #'
 #' @examples
 
-calculateMENTHUGeneSeq <- function(pamList, cutDistList, ohList, wiggle = TRUE, wiggleRoom = 39, tal, geneSeq, silent){
+calculateMENTHUGeneSeq <- function(pamList, cutDistList, ohList, wiggle = TRUE, wiggleRoom = 39, tal, geneSeq, verbose){
 	require(Biostrings)
 	require(plyr)
 	
@@ -35,7 +35,7 @@ calculateMENTHUGeneSeq <- function(pamList, cutDistList, ohList, wiggle = TRUE, 
 	# If the user is using Cas:
 	if(length(pamList) > 0) {
 		
-		if(!silent) {
+		if(verbose) {
 			print("Scanning for CRISPR target sites...")
 		}
 		
@@ -57,7 +57,7 @@ calculateMENTHUGeneSeq <- function(pamList, cutDistList, ohList, wiggle = TRUE, 
 		# Set pamFlag TRUE - PAMs are used
 		pamFlag <- TRUE
 		
-		if(!silent) {
+		if(verbose) {
 			print("Pre-processing CRISPR target sites...")
 		}
 		
@@ -129,7 +129,7 @@ calculateMENTHUGeneSeq <- function(pamList, cutDistList, ohList, wiggle = TRUE, 
 		
 		
 		# Update progress bar
-		if(!silent) {
+		if(verbose) {
 			print("Pre-processing TALEN target sites...")
 		}
 		
@@ -140,8 +140,6 @@ calculateMENTHUGeneSeq <- function(pamList, cutDistList, ohList, wiggle = TRUE, 
 														 stringsAsFactors = FALSE)
 		
 		talSites <- unique(suppressMessages(plyr::join(talSites, tempExonDF, by = 'Exon_Num')))
-		
-		
 		
 		# Drop target sites where the cut site is not within the exon boundaries
 		keepT     <- sapply(1:nrow(talSites), function(x) talSites$CutIndex[x] %in% seq(from = talSites$exonStart[x], to = talSites$exonEnd[x], by = 1))
@@ -168,7 +166,7 @@ calculateMENTHUGeneSeq <- function(pamList, cutDistList, ohList, wiggle = TRUE, 
 											 stringsAsFactors = FALSE)
 	
 	if(pamFlag){
-		if(!silent) {
+		if(verbose) {
 			print("Calculating MENTHU v2.0 scores for CRISPR sites...")
 		}
 		
@@ -182,7 +180,7 @@ calculateMENTHUGeneSeq <- function(pamList, cutDistList, ohList, wiggle = TRUE, 
 		menthuFrame <- as.data.frame(matrix(unlist(sapply(context, menthuFrameFunc)), ncol = 5, byrow = TRUE), stringsAsFactors = FALSE)
 		
 		# Update progress bar
-		if(!silent) {
+		if(verbose) {
 			print("Formatting CRISPR site results...")
 		}
 		
@@ -269,10 +267,10 @@ calculateMENTHUGeneSeq <- function(pamList, cutDistList, ohList, wiggle = TRUE, 
 																Context          = pamSites$seq,
 																stringsAsFactors = FALSE)
 	}
-	
+
 	if(talFlag){
 		# Update progress bar
-		if(!silent) {
+		if(verbose) {
 			print("Calculating MENTHU v2.0 scores for TALEN sites...")
 		}
 		
@@ -286,10 +284,9 @@ calculateMENTHUGeneSeq <- function(pamList, cutDistList, ohList, wiggle = TRUE, 
 		menthuFrameT <- as.data.frame(matrix(unlist(sapply(contextT, menthuFrameTFunc)), ncol = 5, byrow = TRUE), stringsAsFactors = FALSE)
 		
 		# Update progress bar
-		if(!silent) {
+		if(verbose) {
 			print("Formatting TALEN site results...")
 		}
-		
 		# Clean up the resulting data frame
 		colnames(menthuFrameT) <- c("seq", "menthuScore", "frameShift", "topDel", "topMH")
 		rownames(menthuFrameT) <- c()
@@ -380,13 +377,13 @@ calculateMENTHUGeneSeq <- function(pamList, cutDistList, ohList, wiggle = TRUE, 
 #'
 #' @examples
 
-calculateMENTHUGeneSeqGenBank <- function(pamList, cutDistList, ohList, wiggle = TRUE, wiggleRoom = 39, talenList, genbankInfo, exonStuff, silent){
+calculateMENTHUGeneSeqGenBank <- function(pamList, cutDistList, ohList, wiggle = TRUE, wiggleRoom = 39, talenList, genbankInfo, exonStuff, verbose){
 	require(plyr)
 	require(Biostrings)
 	require(curl)
 	require(stringr)
 	
-	if(!silent) {
+	if(verbose) {
 		print("Processing GenBank accession...")
 	}
 	
@@ -408,7 +405,7 @@ calculateMENTHUGeneSeqGenBank <- function(pamList, cutDistList, ohList, wiggle =
 	# If the user is using Cas:
 	if(length(pamList) > 0){
 		# Update progress
-		if(!silent) {
+		if(verbose) {
 			print("Scanning for target sites...")
 		}
 		
@@ -443,7 +440,7 @@ calculateMENTHUGeneSeqGenBank <- function(pamList, cutDistList, ohList, wiggle =
 		pamFlag <- TRUE
 		
 		# Update progress bar
-		if(!silent) {
+		if(verbose) {
 			print("Pre-processing CRISPR target sites...")
 		}
 
@@ -487,8 +484,8 @@ calculateMENTHUGeneSeqGenBank <- function(pamList, cutDistList, ohList, wiggle =
 	# If there are TALEN inputs
 	if(length(talenList) > 0){
 		
-		if(!silent) {
-			print("Idetifying TALEN targets...")
+		if(verbose) {
+			print("Identifying TALEN targets...")
 		}
 		# Set all exon starts to the exon starts in the input frame
 		# Submit talen info to talPal
@@ -517,10 +514,10 @@ calculateMENTHUGeneSeqGenBank <- function(pamList, cutDistList, ohList, wiggle =
 		}
 		
 		# Update progress bar
-		if(!silent) {
+		if(verbose) {
 			print("Pre-processing TALEN target sites...")
 		}
-		progress$inc(0.01, detail = "Pre-processing TALEN target sites...")
+
 		talSites <- unique(suppressMessages(plyr::join(talSites, exonDF, by = 'Exon_Num')))
 		
 		# Drop target sites where the cut site is not within the exon boundaries
@@ -553,7 +550,7 @@ calculateMENTHUGeneSeqGenBank <- function(pamList, cutDistList, ohList, wiggle =
 														stringsAsFactors = FALSE)
 
 	if(pamFlag){
-		if(!silent) {
+		if(verbose) {
 			print("Calculating MENTHU v2.0 scores for CRISPR sites...")
 		}
 		
@@ -566,11 +563,9 @@ calculateMENTHUGeneSeqGenBank <- function(pamList, cutDistList, ohList, wiggle =
 		# Get the menthu scores
 		menthuFrame <- as.data.frame(matrix(unlist(sapply(context, menthuFrameFunc)), ncol = 5, byrow = TRUE), stringsAsFactors = FALSE)
 		
-		if(!silent) {
-			print("Formatting CRISPR site reults...")
+		if(verbose) {
+			print("Formatting CRISPR site results...")
 		}
-		# Update progress bar
-		progress$inc(0.01, detail = "Formatting CRISPR site results...")
 		
 		row.names(menthuFrame)  <- c()
 		colnames(menthuFrame)   <- c("seq", "menthuScore", "frameShift", "topDel", "topMH")
@@ -661,7 +656,7 @@ calculateMENTHUGeneSeqGenBank <- function(pamList, cutDistList, ohList, wiggle =
 	}
 	
 	if(talFlag){
-		if(!silent) {
+		if(verbose) {
 			print("Calculating MENTHU v2.0 scores for TALEN sites...")
 		}
 		
@@ -674,7 +669,7 @@ calculateMENTHUGeneSeqGenBank <- function(pamList, cutDistList, ohList, wiggle =
 		# Calculate competition on all the context
 		menthuFrameT <- as.data.frame(matrix(unlist(sapply(contextT, menthuFrameTFunc)), ncol = 5, byrow = TRUE), stringsAsFactors = FALSE)
 		
-		if(!silent) {
+		if(verbose) {
 			print("Formatting TALEN site results...")
 		}
 		
@@ -749,11 +744,11 @@ calculateMENTHUGeneSeqGenBank <- function(pamList, cutDistList, ohList, wiggle =
 #'
 #' @examples
 
-calculateMENTHUEnsembl <- function(pamList, cutDistList, ohList, wiggle = TRUE, wiggleRoom = 39, talenList, ensemblInfo, exonStuff, silent){
+calculateMENTHUEnsembl <- function(pamList, cutDistList, ohList, wiggle = TRUE, wiggleRoom = 39, talenList, ensemblInfo, exonStuff, verbose){
 	require(plyr)
 
 	# Update progress
-	if(!silent) {
+	if(verbose) {
 		print("Processing Ensembl sites...")
 	}
 	
@@ -776,7 +771,7 @@ calculateMENTHUEnsembl <- function(pamList, cutDistList, ohList, wiggle = TRUE, 
 	# If the user is using Cas:
 	if(length(pamList) > 0){
 		
-		if(!silent) {
+		if(verbose) {
 			print("Scanning for CRISPR target sites...")
 		}
 		
@@ -798,7 +793,7 @@ calculateMENTHUEnsembl <- function(pamList, cutDistList, ohList, wiggle = TRUE, 
 		pamFlag <- TRUE
 		
 		# Update progress bar
-		if(!silent) {
+		if(verbose) {
 			print("Pre-processing CRISPR target sites...")
 			
 		}
@@ -863,7 +858,7 @@ calculateMENTHUEnsembl <- function(pamList, cutDistList, ohList, wiggle = TRUE, 
 
 		
 		# Update progress bar
-		if(!silent) {
+		if(verbose) {
 			print("Pre-processing TALEN target sites...")
 		}
 		talSites <- unique(suppressMessages(plyr::join(talSites, exonDF, by = 'Exon_Num')))
@@ -903,7 +898,7 @@ calculateMENTHUEnsembl <- function(pamList, cutDistList, ohList, wiggle = TRUE, 
 														stringsAsFactors = FALSE)
 	
 	if(pamFlag){
-		if(!silent) {
+		if(verbose) {
 			print("Calculating MENTHUv2.0 scores for CRISPR sites...")
 		}
 		
@@ -916,7 +911,7 @@ calculateMENTHUEnsembl <- function(pamList, cutDistList, ohList, wiggle = TRUE, 
 		menthuFrame <- as.data.frame(matrix(unlist(sapply(context, menthuFrameFunc)), ncol = 5, byrow = TRUE), stringsAsFactors = FALSE)
 		
 		# Update progress
-		if(!silent) {
+		if(verbose) {
 			print("Formatting CRISPR site results...")
 		}
 		
@@ -1009,7 +1004,7 @@ calculateMENTHUEnsembl <- function(pamList, cutDistList, ohList, wiggle = TRUE, 
 	
 	if(talFlag){
 		# Update progress bar
-		if(!silent) {
+		if(verbose) {
 			print("Calculating MENTHUv2.0 scores for TALEN sites...")
 		}
 		
@@ -1023,7 +1018,7 @@ calculateMENTHUEnsembl <- function(pamList, cutDistList, ohList, wiggle = TRUE, 
 		menthuFrameT <- as.data.frame(matrix(unlist(sapply(contextT, menthuFrameTFunc)), ncol = 5, byrow = TRUE), stringsAsFactors = FALSE)
 		
 		# Update progress bar
-		if(!silent){
+		if(verbose){
 			print("Formatting TALEN site results...")
 			
 		}
@@ -1063,7 +1058,7 @@ calculateMENTHUEnsembl <- function(pamList, cutDistList, ohList, wiggle = TRUE, 
 															 Exon_ID         = talSites$Exon_Num,
 															 DSB_Location    = talSites$CutIndex,
 															 Microhomology   = talSites$topMH,
-															 PreMA_Sequence    = talSites$topDel,
+															 PreMA_Sequence  = talSites$topDel,
 															 Context         = talSites$seq,
 															 stringsAsFactors = FALSE)
 		
