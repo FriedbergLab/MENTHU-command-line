@@ -1,4 +1,4 @@
-# MENTHU-command-line v1.0.0-alpha
+# MENTHU-command-line v1.0.0
 
 This repository contains scripts for running the MENTHU analysis at large scale, offline. It is compatible with Linux, Mac, Windows (using Cygwin), and Windows CMD.
 
