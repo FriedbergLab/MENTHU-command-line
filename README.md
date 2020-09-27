@@ -13,7 +13,7 @@ Run MENTHU through a GUI locally using the instructions here: https://github.com
 ## MENTHU-command-line Installation
 MENTHU-command-line requires an R installation in order to work. 
 
-If you already have R installed, then you can skip the R installation instructions and go straight to [Package Installation](https://github.com/parnaljoshi/MENTHU-command-line#package-installation); see Step 2 ([Add R to Path](https://github.com/parnaljoshi/MENTHU-command-line#add-r-to-path.
+If you already have R installed, then you can skip the R installation instructions and go straight to [Package Installation](https://github.com/parnaljoshi/MENTHU-command-line#package-installation); see Step 2 ([Add R to Path](https://github.com/parnaljoshi/MENTHU-command-line#add-r-to-path).
 
 
 ### [1. Download and Install R](#1-download-and-install-r)
