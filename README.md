@@ -13,7 +13,7 @@ Run MENTHU through a GUI locally using the instructions here: https://github.com
 ## MENTHU-command-line Installation
 MENTHU-command-line requires an R installation in order to work. 
 
-If you already have R installed, then you can skip the R installation instructions and go straight to [Package Installation](https://github.com/parnaljoshi/MENTHU-command-line#package-installation); see Step 2 ([Add R to Path](https://github.com/parnaljoshi/MENTHU-command-line#add-r-to-path).
+If you already have R installed, then you can skip the R installation instructions and go straight to [Package Installation](https://github.com/parnaljoshi/MENTHU-command-line#package-installation); see Step 2 ([Add R to Path](https://github.com/FriedbergLab/MENTHU-command-line#add-r-to-path).
 
 
 ### [1. Download and Install R](#1-download-and-install-r)
@@ -61,7 +61,7 @@ R version 3.4.4 <2018-03-15> -- "Someone to Lean On"
 Copyright <C> 2018 THe R Foundation for Statistical Computing
 ```
 
-You can then go directly to [Package Installation](https://github.com/parnaljoshi/MENTHU-command-line#package-installation).
+You can then go directly to [Package Installation](https://github.com/FriedbergLab/MENTHU-command-line#package-installation).
 
 If you receive ```-bash: R: command not found"``` on Unix/Cygwin or ```"'R' is not recognized as an internal or external command, operable program or batch file```, then R is not in your PATH, and you should follow the instructions below.
 
@@ -98,7 +98,7 @@ OR
 (2) From a Linux, Mac, or Windows Cygwin command line, navigate to the location you want to keep the MENTHU-command-line script, and enter the following command:
 
 ```
-git clone https://github.com/parnaljoshi/MENTHU-command-line.git
+git clone https://github.com/FriedbergLab/MENTHU-command-line.git
 ```
 
 ### [4. Package Installation](#package-installation)
