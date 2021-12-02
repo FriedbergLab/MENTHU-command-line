@@ -98,7 +98,7 @@ OR
 (2) From a Linux, Mac, or Windows Cygwin command line, navigate to the location you want to keep the MENTHU-command-line script, and enter the following command:
 
 ```
-git clone https://github.com/parnaljoshi/MENTHU-command-line.git
+git clone https://github.com/FriedbergLab/MENTHU-command-line.git
 ```
 
 ### [4. Package Installation](#package-installation)
