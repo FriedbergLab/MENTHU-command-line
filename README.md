@@ -13,7 +13,7 @@ Run MENTHU through a GUI locally using the instructions here: https://github.com
 ## MENTHU-command-line Installation
 MENTHU-command-line requires an R installation in order to work. 
 
-If you already have R installed, then you can skip the R installation instructions and go straight to [Package Installation](https://github.com/parnaljoshi/MENTHU-command-line#package-installation); see Step 2 ([Add R to Path](https://github.com/FriedbergLab/MENTHU-command-line#add-r-to-path).
+If you already have R installed, then you can skip the R installation instructions and go straight to [Package Installation](https://github.com/FriedbergLab/MENTHU-command-line#package-installation); see Step 2 ([Add R to Path](https://github.com/FriedbergLab/MENTHU-command-line#add-r-to-path).
 
 
 ### [1. Download and Install R](#1-download-and-install-r)
@@ -114,6 +114,7 @@ Rscript packageInstaller.R
 
 This script will check if you have the appropriate packages installed, and then install them. This step may take several minutes, but does not need to be run subsequent times you run MENTHU-command-line (unless MENTHU-command-line is updated).
 
+<!---
 ### [5. Updating MENTHU-command-line](#updating)
 We will update the MENTHU-command-line code as needed (and there are a few additional convenience features under development.) Check the changelog for update information.
 
@@ -126,3 +127,4 @@ git pull origin master
 Otherwise you will need to re-download the zip file as in [Download MENTU-command-line](#download-mcl).
 
 You should also re-run the packageInstaller.R script, in case new packages are now required.
+-->
