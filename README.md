@@ -197,15 +197,19 @@ The parameters are explained below. Each parameter is delimited by a space. Para
 
 ### [5. Examples](#examples)
 
-**Example SpCas9, Ensembl:**
 ```
-Rscript menthu.R EnsemblExample.csv T NGG -3 0 F NA ens ENSDART00000011520.8 1.5 F F F
+Rscript menthu.R [outFile] [CRISPR Option] [PAM Sequence] [Distance to DSB] [Overhang] [TALEN Option] [TALEN scheme] [Gen Input Type] [Gen Input] [Score Threshold] [T7 opt] [verbose] [validate]
 ```
-**Example Cas12a:**
+
+**Example Linux OS, Ensembl:**
 ```
-Rscript menthu.R EnsemblCas12aExample.csv T TTTN 18 5 F NA ens ENSDART00000011520.8 1.5 F F F
+Rscript menthu.R EnsemblExample.csv T NGG -3 0 F 0 ens ENSDART00000011520 1.5 F F F
 ```
-**Example TALEN (left arm: 15 nts, spacer: 16 nts; right arm 18 nts):**
+**Example Windows, Ensembl:**
+```
+Rscript menthu-cmd.R EnsemblCas12aExample.csv T TTTN 18 5 F NA ens ENSDART00000011520.8 1.5 F F F
+```
+**Example Mac (left arm: 15 nts, spacer: 16 nts; right arm 18 nts):**
 ```
 Rscript menthu.R GenBankTalenExample.csv F NA 0 0 T 15/16/18 gb AY214391.1 1.5 F F F
 ```
