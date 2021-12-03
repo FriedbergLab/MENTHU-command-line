@@ -108,7 +108,7 @@ git clone https://github.com/FriedbergLab/MENTHU-command-line.git
 ### [3. Package Installation](#package-installation)
 MENTHU-command-line requires a few additional R packages in order to function. You may need administrator or root privileges to install these packages. Open R on your machine and run the following code.
 
-This script will check if you have the appropriate packages installed, and then install them. This step may take several minutes, but does not need to be run subsequent times you run MENTHU-command-line (unless MENTHU-command-line is updated).
+This script will check if you have the appropriate packages installed, and then install those that are not already installed. This step may take several minutes, but does not need to be run subsequent times you run MENTHU-command-line (unless MENTHU-command-line is updated).
 
 ### Run this code ONLY THE FIRST TIME you run this tool on a computer, or when you need to update these packages:
 
