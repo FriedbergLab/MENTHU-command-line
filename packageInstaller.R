@@ -8,7 +8,7 @@ packages <- c("stringr", "stringi", "BiocManager", "rentrez", "rlist", "plyr", "
 # Install packages not yet installed
 installed_packages <- packages %in% rownames(installed.packages())
 if (any(installed_packages == FALSE)) {
-  install.packages(packages[!installed_packages], lib = Sys.getenv("R_LIBS_USER"))
+  install.packages(packages[!installed_packages], lib = Sys.getenv("R_LIBS_USER"), repos = "http://cran.us.r-project.org")
 }
 BiocManager::install("Biostrings", lib = Sys.getenv("R_LIBS_USER"))
 
