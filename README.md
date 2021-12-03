@@ -8,12 +8,12 @@ If you only intend to determine MENTHU scores on a small scale, we highly recomm
 
 Run MENTHU online through a web interface here: http://genesculpt.org/menthu/
 
-Run MENTHU through a GUI locally using the instructions here: https://github.com/Dobbs-Lab/MENTHU#run-menthu-locally
+Run MENTHU through a GUI locally using the instructions here: https://github.com/FriedbergLab/MENTHU#run-menthu-locally
 
 ## MENTHU-command-line Installation
 MENTHU-command-line requires an R installation in order to work. 
 
-If you already have R installed, then you can skip the R installation instructions and go straight to [Package Installation](https://github.com/parnaljoshi/MENTHU-command-line#package-installation); see Step 2 ([Add R to Path](https://github.com/parnaljoshi/MENTHU-command-line#add-r-to-path).
+If you already have R installed, then you can skip the R installation instructions and go straight to [Package Installation](https://github.com/parnaljoshi/MENTHU-command-line#package-installation); see Step 2 ([Add R to Path](https://github.com/FriedbergLab/MENTHU-command-line#add-r-to-path).
 
 
 ### [1. Download and Install R](#1-download-and-install-r)
@@ -32,7 +32,7 @@ Scroll down to the "Files" section, and find the R pkg file that lists your oper
 
 Linux/Unix: https://mirror.las.iastate.edu/CRAN/bin/linux/
 
-Find your Unix distro, and folow the instructions in the directory.
+Find your Unix distro, and follow the instructions in the directory.
  
 
 Once you have downloaded the R installer, run it to install R. You may be required to enter administrator credentials; if you do not have these credentials, talk to your institution's IT department to have them install the software.
@@ -61,7 +61,7 @@ R version 3.4.4 <2018-03-15> -- "Someone to Lean On"
 Copyright <C> 2018 THe R Foundation for Statistical Computing
 ```
 
-You can then go directly to [Package Installation](https://github.com/parnaljoshi/MENTHU-command-line#package-installation).
+You can then go directly to [Package Installation](https://github.com/FriedbergLab/MENTHU-command-line#package-installation).
 
 If you receive ```-bash: R: command not found"``` on Unix/Cygwin or ```"'R' is not recognized as an internal or external command, operable program or batch file```, then R is not in your PATH, and you should follow the instructions below.
 
