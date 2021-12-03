@@ -92,7 +92,7 @@ Windows, Cygwin:
 export PATH="[/path/to/R/]:$PATH"
 ```
 -->
-### [3. Download MENTHU-command-line](#download-mcl)
+### [2. Download MENTHU-command-line](#download-mcl)
 
 To download MENTHU-command-line, you can either:
 
@@ -105,8 +105,30 @@ OR
 ```
 git clone https://github.com/FriedbergLab/MENTHU-command-line.git
 ```
+### [3. Package Installation](#package-installation)
+MENTHU-command-line requires a few additional R packages in order to function. You may need administrator or root privileges to install these packages. Open R on your machine and run the following code.
 
-### [4. Package Installation](#package-installation)
+This script will check if you have the appropriate packages installed, and then install them. This step may take several minutes, but does not need to be run subsequent times you run MENTHU-command-line (unless MENTHU-command-line is updated).
+
+### Run this code ONLY THE FIRST TIME you run this tool on a computer, or when you need to update these packages:
+
+```
+#Install packages required to run MENTHU-command-line; you can also run this code to update these packages
+
+packages <- c("stringr", "stringi", "BiocManager", "rentrez", "rlist", "plyr", "Rcpp", "curl", "httr", "jsonlite", "xml2")
+
+# Install packages not yet installed
+installed_packages <- packages %in% rownames(installed.packages())
+if (any(installed_packages == FALSE)) {
+  install.packages(packages[!installed_packages])
+}
+BiocManager::install("Biostrings")
+
+# Packages loading
+invisible(lapply(packages, library, character.only = TRUE))
+```
+<!---
+### [3. Package Installation](#package-installation)
 MENTHU-command-line requires a few additional R packages in order to function. You may need administrator or root privileges to install these packages.
 
 MENTHU-command-line includes a script, packageInstaller.R, to perform easy 1-step installation of the needed R packages.
@@ -118,6 +140,10 @@ Rscript packageInstaller.R
 ```
 
 This script will check if you have the appropriate packages installed, and then install them. This step may take several minutes, but does not need to be run subsequent times you run MENTHU-command-line (unless MENTHU-command-line is updated).
+-->
+
+### [4. Examples](#examples)
+
 
 <!---
 ### [5. Updating MENTHU-command-line](#updating)
