@@ -157,7 +157,7 @@ Rscript packageInstaller.R
 
 This script will check if you have the appropriate packages installed, and then install them. This step may take several minutes, but does not need to be run subsequent times you run MENTHU-command-line (unless MENTHU-command-line is updated).
 
-## Running MENTHU-command-line
+### [4. Running MENTHU-command-line](#running-menthu)
 
 MENTHU-command-line can be run from Unix-like command lines (Linux, Mac, Cygwin on Windows) or Windows CMD. However, due to end-of-line conversion differences between Unix and Dos, **you must use menthu.R on Linux, Mac, and Cygwin, and menthu-cmd.R in Windows CMD**. 
 
@@ -204,6 +204,8 @@ The parameters are explained below. Each parameter is delimited by a space. Para
 
 
 
+```
+### [5. Examples](#examples)
 
 **Example SpCas9, Ensembl:**
 ```
@@ -216,8 +218,6 @@ Rscript menthu.R EnsemblCas12aExample.csv T TTTN 18 5 F NA ens ENSDART0000001152
 **Example TALEN (left arm: 15 nts, spacer: 16 nts; right arm 18 nts):**
 ```
 Rscript menthu.R GenBankTalenExample.csv F NA 0 0 T 15/16/18 gb AY214391.1 1.5 F F F
-```
-### [4. Examples](#examples)
 
 
 <!---
