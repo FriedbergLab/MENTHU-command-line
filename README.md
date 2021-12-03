@@ -136,7 +136,7 @@ invisible(lapply(packages, library, character.only = TRUE))
 ```
 
 ### [3. Package Installation](#package-installation)
-Prerequites:
+Prerequisites:
 
 Users of Unix based OS will require additional libraries for R package installation. Make sure they are installed and updated by running the following code:
 
