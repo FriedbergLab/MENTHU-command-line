@@ -134,8 +134,17 @@ BiocManager::install("Biostrings")
 # Packages loading
 invisible(lapply(packages, library, character.only = TRUE))
 ```
-<!---
+
 ### [3. Package Installation](#package-installation)
+Prerequites:
+
+Users of Unix based OS will require additional libraries for R package installation. Make sure they are installed and updated by running the following code:
+
+```
+apt install libssl-dev
+apt install libcurl4-openssl-dev
+apt install libxml2-dev 
+```
 MENTHU-command-line requires a few additional R packages in order to function. You may need administrator or root privileges to install these packages.
 
 MENTHU-command-line includes a script, packageInstaller.R, to perform easy 1-step installation of the needed R packages.
@@ -147,7 +156,7 @@ Rscript packageInstaller.R
 ```
 
 This script will check if you have the appropriate packages installed, and then install them. This step may take several minutes, but does not need to be run subsequent times you run MENTHU-command-line (unless MENTHU-command-line is updated).
--->
+
 
 ### [4. Examples](#examples)
 
