@@ -140,13 +140,14 @@ invisible(lapply(packages, library, character.only = TRUE))
 ### [3. Package Installation](#package-installation)
 Prerequisites:
 
-Users of Unix based OS will require additional libraries for R package installation. Make sure they are installed and updated by running the following code:
+Certain libraries will be required for R package installation. This is how users of Ubuntu can install them:
 
 ```
 apt install libssl-dev
 apt install libcurl4-openssl-dev
 apt install libxml2-dev 
 ```
+
 MENTHU-command-line requires a few additional R packages in order to function. 
 
 MENTHU-command-line includes a script, packageInstaller.R, to perform easy 1-step installation of the needed R packages.
