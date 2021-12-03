@@ -46,6 +46,11 @@ Mac OS:     https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Instal
 
 Linux/Unix: https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Installing-R-under-Unix_002dalikes
 
+Here are the general instructions for installing R on any machine:
+
+https://cran.r-project.org/doc/manuals/r-release/R-admin.html
+
+<!---
 
 ### [2. Add R to PATH](#add-r-to-path)
 MENTHU-command-line requires that the path to the R executable/binary be present in the environment PATH variable.
@@ -86,7 +91,7 @@ Windows, Cygwin:
 ```
 export PATH="[/path/to/R/]:$PATH"
 ```
-
+-->
 ### [3. Download MENTHU-command-line](#download-mcl)
 
 To download MENTHU-command-line, you can either:
